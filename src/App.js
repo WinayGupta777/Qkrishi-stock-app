@@ -1,7 +1,7 @@
 import "./App.css";
 import React from 'react';
-import UrlBox from './components/UrlBox';
 import { createTheme, Paper, ThemeProvider } from '@mui/material';
+import Layout from "./components/Layout";
 
 const darkTheme = createTheme({
   palette: { mode: 'dark' }
@@ -13,7 +13,7 @@ const App = () => {
     <ThemeProvider theme={darkTheme}>
       <Paper style={{ height: "100vh", overflow: 'hidden' }} square={true}>
         <div className='app'>
-          <UrlBox />
+          <Layout />
         </div>
       </Paper>
     </ThemeProvider>
