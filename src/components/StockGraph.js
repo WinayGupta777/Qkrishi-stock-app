@@ -5,6 +5,8 @@ import HighchartsData from 'highcharts/modules/data';
 import HighchartsCSV from 'highcharts/modules/data';
 import { Box } from '@mui/material';
 import darkUnica from 'highcharts/themes/dark-unica';
+import { useSelector } from 'react-redux';
+import secret from "../secrets.json";
 
 darkUnica(Highcharts);
 HighchartsData(Highcharts);
@@ -12,6 +14,7 @@ HighchartsCSV(Highcharts);
 
 const StockGraph = () => {
     const [hoverData, setHoverData] = useState(null);
+    const csvUrl = useSelector((state) => state.urlReducer.url);
     const [chartOptions, setChartOptions] = useState({
         title: {
             text: 'Live Data (CSV)'
@@ -25,7 +28,7 @@ const StockGraph = () => {
         series: [],
         chart: {
             height: 650,
-            width: (12/9)*1000
+            width: (12 / 9) * 1000
         }
     });
 
@@ -33,13 +36,15 @@ const StockGraph = () => {
         const fetchData = async () => {
             try {
                 // Fetch the CSV file
-                const response = await fetch('https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=IBM&interval=5min&apikey=demo&datatype=csv');
+                const lastString = `&apikey=${secret.API_KEY}&datatype=csv`;
+                const response = await fetch(csvUrl + lastString);
                 const csvData = await response.text();
 
                 // Parse the CSV data
                 const parsedData = Highcharts.data({
                     csv: csvData,
                     parsed: function (columns) {
+                        console.log(columns);
                         // Process the parsed data and create series
                         const categories = columns[0].slice(1).map((timestamp) => {
                             const date = new Date(parseInt(timestamp));
@@ -78,12 +83,12 @@ const StockGraph = () => {
                     }
                 });
             } catch (error) {
-                console.error('Error fetching or parsing CSV data:', error);
+                alert("Error fetching or parsing CSV data");
             }
         };
 
         fetchData();
-    }, []);
+    }, [csvUrl]);
 
     return (
         <Box sx={{
