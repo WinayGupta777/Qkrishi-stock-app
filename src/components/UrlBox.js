@@ -1,23 +1,19 @@
-
-import { Box, TextField, Typography, Button, styled } from '@mui/material';
-import React from 'react'
+import React, { useState } from 'react';
+import { Box, TextField, Typography, Button } from '@mui/material';
+import { useDispatch } from 'react-redux';
+import setURL  from "../redux/url/urlAction";
 
 const UrlBox = () => {
+  const [url, setUrl] = useState("");
+  const dispatch = useDispatch();
 
-  const CustomTextField = styled(TextField)({
-    '& .MuiOutlinedInput-root': {
-      borderRadius: 0,
-      '& fieldset': {
-        borderColor: '#808080',
-      },
-      '&:hover fieldset': {
-        borderColor: '#B2BAC2',
-      },
-      '&.Mui-focused fieldset': {
-        borderColor: '#fff',
-      },
-    },
-  });
+  const onChangeMethod = (e) => {
+    setUrl(e.target.value);
+  }
+
+  const handleRunClick = () => {
+    dispatch(setURL(url));
+  }
 
   return (
     <>
@@ -35,19 +31,33 @@ const UrlBox = () => {
         <Box sx={{
           flex: 1
         }}>
-          <CustomTextField
+          <TextField
             fullWidth
             size='small'
-            type='url'
-            sx={{ borderRadius: '0px' }}
-            inputProps={{ style: { fontSize: 26 } }}
-            onClick={() => { }}
+            sx={{
+              borderRadius: '0px',
+              '& .MuiOutlinedInput-root': {
+                borderRadius: 0,
+                '& fieldset': {
+                  borderColor: '#808080',
+                },
+                '&:hover fieldset': {
+                  borderColor: '#B2BAC2',
+                },
+                '&.Mui-focused fieldset': {
+                  borderColor: '#fff',
+                },
+              },
+            }}
+            inputProps={{ style: { fontSize: 24 } }}
+            onChange={(e) => onChangeMethod(e)}
           />
         </Box>
         <Box>
           <Button
-            onClick={() => { }}
+            onClick={() => handleRunClick()}
             variant='outlined'
+            type='submit'
             sx={{
               padding: '5px 20px',
               fontSize: 24,
