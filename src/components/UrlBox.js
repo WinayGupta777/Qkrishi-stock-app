@@ -49,7 +49,7 @@ const UrlBox = () => {
                 },
               },
             }}
-            inputProps={{ style: { fontSize: 24 } }}
+            inputProps={{ style: { fontSize: 24, color: "#e5e9f0" } }}
             onChange={(e) => onChangeMethod(e)}
           />
         </Box>

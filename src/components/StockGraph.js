@@ -13,11 +13,10 @@ HighchartsData(Highcharts);
 HighchartsCSV(Highcharts);
 
 const StockGraph = () => {
-    const [hoverData, setHoverData] = useState(null);
     const csvUrl = useSelector((state) => state.urlReducer.url);
     const [chartOptions, setChartOptions] = useState({
         title: {
-            text: 'Live Data (CSV)'
+            text: 'Stock Vizualization'
         },
         xAxis: {
             type: 'datetime',
